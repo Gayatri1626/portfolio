@@ -175,6 +175,7 @@ const resumeData = {
     {
       title: "IBM SkillsBuild State Level Hackathon",
       issuer: "Feb 2025",
+      description: "Secured Top 10 Position in the IBM SkillsBuild Maharashtra State Level Hackathon 2025 for an innovative AI-driven educational solution."
     }
   ],
   blogs: [
@@ -229,7 +230,6 @@ const Home = ({ theme, toggleTheme }) => {
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
-            <a href="#blog">Blog</a>
             <a href="#experience">Experience</a>
             <a href="#education">Education</a>
             <a href="#achievements">Achievements</a>
@@ -243,6 +243,10 @@ const Home = ({ theme, toggleTheme }) => {
           <a href="#contact" className="btn btn-primary" style={{ fontSize: '0.8rem', padding: '0.6rem' }}>Let's Talk</a>
         </div>
       </aside>
+
+      <a href="#blog" className="top-right-blog-btn">
+        BLOG
+      </a>
 
       <main className="main-content">
         <section id="about" className="section fade-in" style={{ paddingTop: '8rem' }}>
