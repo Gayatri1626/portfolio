@@ -175,7 +175,24 @@ const resumeData = {
     {
       title: "IBM SkillsBuild State Level Hackathon",
       issuer: "Feb 2025",
-      description: "Secured Top 10 Position in IBM Skills Build Maharashtra State Level Hackathon Showcase 2025."
+    }
+  ],
+  blogs: [
+    {
+      slug: "future-of-agentic-ai",
+      title: "The Shift from RAG to Agentic Workflows",
+      date: "March 2025",
+      readTime: "5 min read",
+      excerpt: "Why simple retrieval isn't enough anymore, and how autonomous agents are redefining software engineering.",
+      content: "As someone building Ops Chatbots and Conversational systems, I've noticed a major shift: users don't just want answers; they want actions. RAG (Retrieval-Augmented Generation) was the first step—giving LLMs a brain full of your data. But Agentic AI is the second step—giving that brain 'hands' through tool-calling. In my recent projects, I've focused on LlamaIndex agents that can autonomously decide to search the web or query a database, bridging the gap between passive info and active problem-solving."
+    },
+    {
+      slug: "ai-interview-ethics",
+      title: "Ethics of Emotion-Aware AI in Hiring",
+      date: "Feb 2025",
+      readTime: "4 min read",
+      excerpt: "Exploring the balance between data-driven assessment and candidate empathy in automated interview systems.",
+      content: "With the development of VIKA, my conversational AI interview system, the most common question I get is: 'Is it ethical to monitor stress?' The goal isn't to penalize panic, but to foster empathy. Human interviewers naturally adjust their tone when they see a candidate is nervous; AI should be no different. By using computer vision to detect stress, we can actually make automated systems *more* human-centric by lowering the difficulty or providing encouragement when the candidate needs it most."
     }
   ],
   contact: {
@@ -186,19 +203,31 @@ const resumeData = {
   }
 };
 
-const Home = () => {
+const Home = ({ theme, toggleTheme }) => {
   const words = ["AI Solutions", "Computer Vision", "Natural Language Processing", "Agentic AI"];
   return (
     <div className="portfolio">
       <aside className="sidebar">
         <div>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, letterSpacing: '0.1em', marginBottom: '0.5rem' }}>GAYATRI GHORPADE</h2>
-          <p className="text-subtle" style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI/ML Engineer</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <div>
+              <h2 style={{ fontSize: '1rem', fontWeight: 700, letterSpacing: '0.1em', marginBottom: '0.25rem' }}>GAYATRI GHORPADE</h2>
+              <p className="text-subtle" style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI/ML Engineer</p>
+            </div>
+            <button 
+              onClick={toggleTheme} 
+              className="theme-toggle"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? '☼' : '☾'}
+            </button>
+          </div>
           
           <nav className="sidebar-nav">
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
+            <a href="#blog">Blog</a>
             <a href="#experience">Experience</a>
             <a href="#education">Education</a>
             <a href="#achievements">Achievements</a>
@@ -294,6 +323,24 @@ const Home = () => {
                   <h3 style={{ fontSize: '1.5rem', marginBottom: '0.75rem' }}>{project.title}</h3>
                   <p className="highlight-pill" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>{project.tech}</p>
                   <p style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>{project.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section id="blog" className="section">
+          <h2 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '3rem' }}>AI & Tech Insights</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+            {resumeData.blogs.map((blog, i) => (
+              <Link to={`/blog/${blog.slug}`} key={i} className="card-link">
+                <div className="card">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                    <span className="year">{blog.date}</span>
+                    <span className="text-subtle" style={{ fontSize: '0.7rem' }}>{blog.readTime}</span>
+                  </div>
+                  <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{blog.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6 }}>{blog.excerpt}</p>
                 </div>
               </Link>
             ))}
@@ -463,13 +510,65 @@ const ProjectDetail = () => {
   );
 };
 
+const BlogDetail = () => {
+  const { slug } = useParams();
+  const blog = resumeData.blogs.find(b => b.slug === slug);
+
+  if (!blog) return <div className="project-page">Article not found</div>;
+
+  return (
+    <div className="project-page">
+      <nav className="project-nav">
+        <Link to="/" className="back-link">
+          <span className="arrow">←</span> Back to home
+        </Link>
+      </nav>
+
+      <div className="project-container">
+        <header className="project-header fade-in">
+          <div className="header-meta">
+            <span className="year">{blog.date}</span>
+            <span className="status-pill">{blog.readTime}</span>
+          </div>
+          <h1 className="project-title" style={{ fontSize: '3.5rem' }}>{blog.title}</h1>
+          <div className="project-overview-container" style={{ marginTop: '4rem' }}>
+            <p className="project-overview-text" style={{ fontSize: '1.25rem', color: 'var(--text)', whiteSpace: 'pre-wrap' }}>
+              {blog.content}
+            </p>
+          </div>
+        </header>
+        
+        <footer className="project-footer">
+          <div className="contact-card">
+            <h3>WHAT DO YOU THINK?</h3>
+            <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>I'd love to hear your perspective on this trend.</p>
+            <div style={{ marginTop: '2rem' }}>
+              <a href={`mailto:${resumeData.contact.email}`} className="btn btn-primary">Share Thoughts</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
 const App = () => {
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  
+  useEffect(() => {
+    document.documentElement.className = theme === 'light' ? 'light-mode' : '';
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+
   return (
     <Router>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home theme={theme} toggleTheme={toggleTheme} />} />
         <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
       </Routes>
     </Router>
   );
