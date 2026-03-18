@@ -184,7 +184,8 @@ const resumeData = {
       date: "March 2025",
       readTime: "5 min read",
       excerpt: "Why simple retrieval isn't enough anymore, and how autonomous agents are redefining software engineering.",
-      content: "As someone building Ops Chatbots and Conversational systems, I've noticed a major shift: users don't just want answers; they want actions. RAG (Retrieval-Augmented Generation) was the first step—giving LLMs a brain full of your data. But Agentic AI is the second step—giving that brain 'hands' through tool-calling. In my recent projects, I've focused on LlamaIndex agents that can autonomously decide to search the web or query a database, bridging the gap between passive info and active problem-solving."
+      image: "/assets/agentic-ai-hero.png",
+      content: "As someone building Ops Chatbots and Conversational systems, I've noticed a major shift: users don't just want answers; they want actions. RAG (Retrieval-Augmented Generation) was the first step—giving LLMs a brain full of your data. But Agentic AI is the second step—giving that brain 'hands' through tool-calling.\n\nIn my recent projects, I've focused on LlamaIndex agents that can autonomously decide to search the web or query a database, bridging the gap between passive info and active problem-solving. This shift is critical for the next wave of IT automation. We are moving away from 'Chat with your PDF' toward 'Agents that manage your infrastructure.'\n\nTransitioning to an agentic architecture requires a few core components:\n\n1. Tool-Centric Design: LLMs need a standardized interface to interact with the world.\n2. Reasoning Loops: The ability to reflect on output and retry if a tool fails.\n3. Memory Integration: Maintaining state across complex, multi-step tasks.\n\nFor engineers, this means our focus is shifting from prompt engineering to 'tool engineering'—building the robust APIs that these agents use to get real work done."
     },
     {
       slug: "ai-interview-ethics",
@@ -192,6 +193,7 @@ const resumeData = {
       date: "Feb 2025",
       readTime: "4 min read",
       excerpt: "Exploring the balance between data-driven assessment and candidate empathy in automated interview systems.",
+      image: "/assets/ai-ethics-hero.png",
       content: "With the development of VIKA, my conversational AI interview system, the most common question I get is: 'Is it ethical to monitor stress?' The goal isn't to penalize panic, but to foster empathy. Human interviewers naturally adjust their tone when they see a candidate is nervous; AI should be no different. By using computer vision to detect stress, we can actually make automated systems *more* human-centric by lowering the difficulty or providing encouragement when the candidate needs it most."
     }
   ],
@@ -517,28 +519,47 @@ const BlogDetail = () => {
   if (!blog) return <div className="project-page">Article not found</div>;
 
   return (
-    <div className="project-page">
-      <nav className="project-nav">
-        <Link to="/" className="back-link">
-          <span className="arrow">←</span> Back to home
-        </Link>
-      </nav>
+    <div className="blog-page">
+      <header className="blog-floating-header">
+        <div className="blog-logo">GAYATRIGHORPADE AI BLOG</div>
+        <div className="blog-btn-group">
+          <Link to="/" className="blog-back-btn">RETURN TO CORE</Link>
+          <a href={`mailto:${resumeData.contact.email}`} className="blog-contact-btn">GET IN TOUCH</a>
+        </div>
+      </header>
 
-      <div className="project-container">
-        <header className="project-header fade-in">
-          <div className="header-meta">
-            <span className="year">{blog.date}</span>
-            <span className="status-pill">{blog.readTime}</span>
+      <section className="blog-hero" style={{ backgroundImage: `url(${blog.image})` }}>
+        <div className="blog-hero-overlay">
+          <div className="blog-hero-content">
+            <h1 className="blog-hero-title">{blog.title}</h1>
+            <div className="blog-hero-meta">
+              <div className="meta-item">
+                <span className="meta-label">AUTHOR_ID</span>
+                <span className="meta-value">GAYATRIGHORPADE</span>
+              </div>
+              <div className="meta-item">
+                <span className="meta-label">READ_TIME</span>
+                <span className="meta-value">{blog.readTime.split(' ')[0]}M</span>
+              </div>
+              <div className="meta-item">
+                <span className="meta-label">SECTOR</span>
+                <span className="meta-value">AI / TECH</span>
+              </div>
+              <div className="meta-item">
+                <span className="meta-label">TIMESTAMP</span>
+                <span className="meta-value">{blog.date.toUpperCase()}</span>
+              </div>
+            </div>
           </div>
-          <h1 className="project-title" style={{ fontSize: '3.5rem' }}>{blog.title}</h1>
-          <div className="project-overview-container" style={{ marginTop: '4rem' }}>
-            <p className="project-overview-text" style={{ fontSize: '1.25rem', color: 'var(--text)', whiteSpace: 'pre-wrap' }}>
-              {blog.content}
-            </p>
-          </div>
-        </header>
+        </div>
+      </section>
+
+      <div className="blog-detail-container fade-in">
+        <article className="blog-article-content">
+          <p style={{ whiteSpace: 'pre-wrap' }}>{blog.content}</p>
+        </article>
         
-        <footer className="project-footer">
+        <footer className="blog-footer">
           <div className="contact-card">
             <h3>WHAT DO YOU THINK?</h3>
             <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>I'd love to hear your perspective on this trend.</p>
