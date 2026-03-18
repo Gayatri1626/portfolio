@@ -186,6 +186,7 @@ const resumeData = {
       readTime: "5 min read",
       excerpt: "Why simple retrieval isn't enough anymore, and how autonomous agents are redefining software engineering.",
       image: "/assets/agentic-ai-hero.png",
+      tags: ["AGENTIC AI", "RAG", "LLAMAINdex", "TOOL CALLING", "AUTONOMOUS AGENTS"],
       content: "As someone building Ops Chatbots and Conversational systems, I've noticed a major shift: users don't just want answers; they want actions. RAG (Retrieval-Augmented Generation) was the first step—giving LLMs a brain full of your data. But Agentic AI is the second step—giving that brain 'hands' through tool-calling.\n\nIn my recent projects, I've focused on LlamaIndex agents that can autonomously decide to search the web or query a database, bridging the gap between passive info and active problem-solving. This shift is critical for the next wave of IT automation. We are moving away from 'Chat with your PDF' toward 'Agents that manage your infrastructure.'\n\nTransitioning to an agentic architecture requires a few core components:\n\n1. Tool-Centric Design: LLMs need a standardized interface to interact with the world.\n2. Reasoning Loops: The ability to reflect on output and retry if a tool fails.\n3. Memory Integration: Maintaining state across complex, multi-step tasks.\n\nFor engineers, this means our focus is shifting from prompt engineering to 'tool engineering'—building the robust APIs that these agents use to get real work done."
     },
     {
@@ -195,6 +196,7 @@ const resumeData = {
       readTime: "4 min read",
       excerpt: "Exploring the balance between data-driven assessment and candidate empathy in automated interview systems.",
       image: "/assets/ai-ethics-hero.png",
+      tags: ["COMPUTER VISION", "EMOTION AI", "ETHICS", "RECRUITMENT", "HCI"],
       content: "With the development of VIKA, my conversational AI interview system, the most common question I get is: 'Is it ethical to monitor stress?' The goal isn't to penalize panic, but to foster empathy. Human interviewers naturally adjust their tone when they see a candidate is nervous; AI should be no different. By using computer vision to detect stress, we can actually make automated systems *more* human-centric by lowering the difficulty or providing encouragement when the candidate needs it most."
     }
   ],
@@ -244,9 +246,9 @@ const Home = ({ theme, toggleTheme }) => {
         </div>
       </aside>
 
-      <a href="#blog" className="top-right-blog-btn">
+      <Link to="/blog" className="top-right-blog-btn">
         BLOG
-      </a>
+      </Link>
 
       <main className="main-content">
         <section id="about" className="section fade-in" style={{ paddingTop: '8rem' }}>
@@ -335,23 +337,7 @@ const Home = ({ theme, toggleTheme }) => {
           </div>
         </section>
 
-        <section id="blog" className="section">
-          <h2 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '3rem' }}>AI & Tech Insights</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
-            {resumeData.blogs.map((blog, i) => (
-              <Link to={`/blog/${blog.slug}`} key={i} className="card-link">
-                <div className="card">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                    <span className="year">{blog.date}</span>
-                    <span className="text-subtle" style={{ fontSize: '0.7rem' }}>{blog.readTime}</span>
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{blog.title}</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6 }}>{blog.excerpt}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        {/* Blog section removed from Home, now has its own page */}
 
         <section id="experience" className="section">
           <h2 style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4rem' }}>Professional Experience</h2>
@@ -516,7 +502,55 @@ const ProjectDetail = () => {
   );
 };
 
-const BlogDetail = () => {
+const BlogList = () => {
+  return (
+    <div className="blog-page">
+      <header className="blog-floating-header">
+        <div className="blog-logo">GAYATRIGHORPADE AI BLOG</div>
+        <div className="blog-btn-group">
+          <Link to="/" className="blog-back-btn">RETURN TO CORE</Link>
+          <a href="#contact" className="blog-contact-btn">GET IN TOUCH</a>
+        </div>
+      </header>
+
+      <div className="blog-list-container fade-in">
+        <h2 className="blog-list-title">LATEST ENTRIES</h2>
+        <div className="blog-card-grid">
+          {resumeData.blogs.map((blog, i) => (
+            <Link to={`/blog/${blog.slug}`} key={i} className="blog-list-card-link">
+              <div className="blog-list-card">
+                <div className="blog-card-image" style={{ backgroundImage: `url(${blog.image})` }}></div>
+                <div className="blog-card-content">
+                  <div className="blog-card-meta-row">
+                    <div className="blog-card-date">
+                      {blog.date.split(' ')[0].toUpperCase()}<br />
+                      {blog.date.split(' ')[1]}
+                    </div>
+                    <div className="blog-card-tags">
+                      {blog.tags.map((tag, j) => (
+                        <span key={j} className="blog-tag-pill">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <h3 className="blog-card-title">{blog.title}</h3>
+                  <p className="blog-card-excerpt">{blog.excerpt}</p>
+                  <div className="blog-card-footer">
+                    <div className="blog-card-readtime">
+                      <span className="icon">⏱</span> {blog.readTime}
+                    </div>
+                    <div className="blog-card-arrow">↗</div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BlogDetail = ({ theme, toggleTheme }) => {
   const { slug } = useParams();
   const blog = resumeData.blogs.find(b => b.slug === slug);
 
@@ -593,6 +627,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home theme={theme} toggleTheme={toggleTheme} />} />
         <Route path="/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/blog" element={<BlogList />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
       </Routes>
     </Router>
