@@ -1,87 +1,72 @@
-# 🧠 VIKA: Conversational AI Interview System - Project Overview
+# Resume Model & AI Career Coach
 
-**VIKA** is a sophisticated, AI-driven technical interview platform designed to simulate a real-world human interviewer. It goes beyond simple Q&A by analyzing the candidate's code quality, emotional state, and adapting the interview difficulty in real-time.
+A comprehensive platform for AI-powered resume generation, analysis, and career guidance. This project leverages advanced LLMs and NLP techniques to help users build professional resumes and navigate their career paths.
 
----
+## 🚀 Tech Stack
 
-## 🛠️ Tech Stack
+### **Frontend**
+- **HTML5/CSS3**: Core structure and design. Includes multiple responsive templates.
+- **JavaScript**: Client-side logic for dynamic interactions.
+- **Vanilla CSS**: Premium styling with dark mode support.
 
-### **Core Ecosystem**
-*   **Language**: Python 3.10+
-*   **AI Models**:
-    *   **LLM**: Google Gemini (Pro 1.5 / Flash) for natural language reasoning and empathetic interaction.
-    *   **Computer Vision**: YOLOv8 (Face Detection) + Custom TensorFlow/Keras CNN (Emotion Classification).
-*   **Database**: SQLite (for real-time logging of emotion events and results).
-*   **Web Framework**: Flask (REST API for exposing emotion detection data).
+### **Backend**
+- **Framework**: Python (Flask)
+- **API**: Flask-CORS for handling cross-origin requests.
+- **Environment**: `python-dotenv` for secure API key management.
+- **Authentication**: Flask-Bcrypt and custom MongoDB session management.
 
-### **Key Libraries**
-*   **Static Code Analysis**: `radon` (Complexity), `lizard` (Maintainability), `textdistance` (Similarity).
-*   **Vector Search**: `faiss-cpu` (RAG - Retrieval-Augmented Generation for context-aware questions).
-*   **Visualization**: `matplotlib`, `seaborn` (for final emotion trend reports).
-*   **Dev Tools**: `python-dotenv`, `google-generativeai`, `opencv-python`.
+### **Database**
+- **Primary DB**: MongoDB (Atlas)
+- **Collections**:
+  - `users`: User profiles and authentication data.
+  - `finalized_resumes`: Completed resume records.
+  - `draft_resumes`: In-progress resume data.
+  - `session`: Active user sessions.
 
----
-
-## 🧩 Core Logic & Components
-
-### 1. **The Interview Orchestrator ([main.py](file:///d:/Gayatri/Projects/Conversational_AI/main.py))**
-The central hub that manages the session lifecycle. It handles:
-*   Initial coding challenge delivery.
-*   The conversation loop (Safety filter -> Emotion retrieval -> Difficulty tuning -> LLM Response).
-*   Persistence of logs and final report generation.
-
-### 2. **Emotion Detection System (`canfacemo/`)**
-A specialized subsystem that runs independently via a Flask API.
-*   **Input**: Real-time webcam feed.
-*   **Logic**: Detects faces, crops them, pre-processes pixels, and predicts one of 7 emotions (Neutral, Happy, Sad, Anger, Fear, Disgust, Surprise).
-*   **Feature**: Calculates a **Stress Score** (0-1) based on weighted negative emotions.
-
-### 3. **Static Code Reviewer (`code_reviewer/`)**
-Analyzes Python submissions without executing them.
-*   **Complexity**: Measures control flow branches (Cyclomatic Complexity).
-*   **Maintainability Index**: A composite score of human-readability.
-*   **Similarity**: Uses AST (Abstract Syntax Tree) fingerprinting to compare the candidate's code against a reference solution.
-
-### 4. **Adaptive LLM (`LLM/`)**
-The "Brain" of VIKA.
-*   **Safety Filter**: Blocks inappropriate language before it reaches the LLM.
-*   **Context Awareness (RAG)**: Retrieves relevant interview examples from a FAISS index to ground the AI's questions.
-*   **Emotional Empathy**: The prompt engineering injects the candidate's current emotion/stress into the Gemini instructions to adjust the AI's tone.
+### **AI & NLP (The Engine)**
+- **LLM Engine**: Google **Gemini 2.0 Flash** via `google-generativeai`.
+- **Entity Extraction**: `pdfplumber` and `xml.etree.ElementTree` for raw text extraction from PDF/DOCX.
+- **Custom NER**: **spaCy** for Named Entity Recognition training and data preparation.
+- **PDF Processing**: `pdf2image`, `docx2pdf`, and headless **LibreOffice** for high-fidelity document conversion.
 
 ---
 
-## 🔄 System Flow
+## 🛠️ Core Features
 
-```mermaid
-graph TD
-    A[Start Session] --> B[RAG Indexing & Setup]
-    B --> C[Coding Challenge Submission]
-    C --> D[Code Review & Similarity Check]
-    D --> E[Conversational Interview Loop]
-    subgraph "The Loop"
-    E --> F[Capture User Response]
-    F --> G[Poll Emotion API]
-    G --> H[Assess Quality & Tune Difficulty]
-    H --> I[LLM Generates Empathetic Follow-up]
-    I --> E
-    end
-    E --> J[Session End]
-    J --> K[Generate Transcript & Markdown Report]
-```
+### 1. **AI-Powered Resume Builder**
+- **Intelligent Generation**: Generate professional titles, objectives, responsibilities, and skills based on specific job roles using Gemini 2.0 Flash.
+- **Multiple Templates**: 11+ professional resume templates (`template1.py` to `template11.py`) and cover letter templates.
+- **Real-time Preview**: View changes as they are made.
+
+### 2. **Resume Analyzer**
+- **Deep Extraction**: Extracts structured data (Name, Contact, Experience, Education) from uploaded PDFs and DOCX files.
+- **Career Gap Analysis**: Identifies skill gaps and provides improvement suggestions.
+- **Keyword Optimization**: Suggests enhancements for better ATS (Applicant Tracking System) performance.
+
+### 3. **AI Career Coach**
+- **Tailored Advice**: Provides a step-by-step learning path, recommended books, and certifications for specific job titles.
+- **Interview Prep**: Integrated interview coaching features to prepare users for specific roles.
+- **Resource Linking**: Provides direct links to courses and books for career growth.
 
 ---
 
-## 🌟 Why These Features? (The "Why")
+## 🔄 Project Flow
 
-*   **Emotion-Awareness**: Traditional AI interviewers feel robotic. By monitoring stress, VIKA can pivot to easier questions if it detects the candidate is panicking, fostering a better candidate experience.
-*   **AST Fingerprinting**: Simple string comparison fails if variables are renamed. AST-based similarity checks the *structure* of the logic, making it much harder to "trick" the system while allowing for creative solutions.
-*   **RAG (Retrieval-Augmented Generation)**: Ensures the AI stays relevant to specific technical domains by grounding it in a database of high-quality interview content.
-*   **Real-time Dashboards**: Providing a visual emotion trend allows HR teams to see *how* a candidate handles pressure, not just if they solved the problem.
+1.  **Onboarding**: User registers and authenticates through the landing page.
+2.  **Creation Path**:
+    - **Drafting**: User selects a template and fills in details manually or via AI suggestions.
+    - **Generation**: Flask server calls Gemini API to polish content.
+3.  **Analysis Path**:
+    - User uploads an existing resume.
+    - System extracts text -> Gemini analyzes content -> System returns an HTML-formatted dashboard with advice.
+4.  **Finalization**: Resume is generated as a `docx` file, which can then be converted to a professional PDF using the internal LibreOffice-based engine.
+5.  **Export**: User downloads the finalized, high-quality professional document.
 
 ---
 
-## ⚠️ Important Info
+## 🧠 The Engine: How It Works
 
-*   **API Quota**: The system relies heavily on the Gemini API. Ensure `GOOGLE_API_KEY` in [.env](file:///d:/Gayatri/Projects/Conversational_AI/.env) has sufficient quota (billing may be required for Flash 2.0).
-*   **Webcam Access**: The Emotion API requires physical webcam access. If running in a headless server, it will fallback to neutral defaults.
-*   **Maintenance**: The `.conda` and `vika_env` directories are specific to current setups; use `temp_vika_env` if the primary environment is corrupted.
+The system uses a **Hybrid AI Approach**:
+- **Generative AI (Gemini 2.0 Flash)**: Used for high-level reasoning, creative writing, and complex data mapping where flexibility is required.
+- **Deterministic Processing**: Traditional XML and PDF parsing ensure that structural elements (like headers, footers, and tables) are captured accurately.
+- **Custom NLP (spaCy)**: The project includes a dedicated pipeline for generating training data to potentially transition from LLM-based extraction to lighter, custom-trained NER models for faster and more cost-effective entity extraction.

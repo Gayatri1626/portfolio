@@ -113,9 +113,24 @@ const resumeData = {
     },
     {
       slug: "resume-builder",
-      title: "Resume Builder Platform",
-      tech: "NLP, MongoDB, Gemini API, Docker, Flask",
-      description: "Engineered a comprehensive resume-building website with intelligent text extraction."
+      title: "Resume AI & AI Career Coach",
+      tech: "Python, Flask, MongoDB, Gemini 2.0 Flash, spaCy",
+      description: "AI-powered platform for resume generation, career gap analysis, and personalized coaching using Gemini 2.0 Flash.",
+      details: {
+        subtitle: "AI Career Guidance & Document Engineering",
+        overview: "A comprehensive platform for AI-powered resume generation, analysis, and career guidance. This project leverages advanced LLMs and NLP techniques to help users build professional resumes and navigate their career paths.",
+        technologies: [
+          { name: "Gemini 2.0 Flash", desc: "High-speed reasoning for content generation and career coaching." },
+          { name: "Flask & MongoDB", desc: "Scalable backend and storage for user profiles and resume drafts." },
+          { name: "NLP Engine", desc: "Custom spaCy NER and text parsing for deep resume extraction." },
+          { name: "Document Automation", desc: "LibreOffice-based conversion for high-fidelity PDF/DOCX exports." }
+        ],
+        highlights: [
+          { title: "AI-Driven Builder", desc: "Generates tailored responsibilities and skills across 11+ professional templates." },
+          { title: "Smart Analyzer", desc: "Identifies career gaps and suggests keyword optimizations for ATS performance." },
+          { title: "AI Career Coach", desc: "Step-by-step learning paths, interview prep, and certification advice." }
+        ]
+      }
     },
     {
       slug: "gesture-recognition",
