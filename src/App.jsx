@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link, useParams, useLocation } from 'react-router-dom'
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 const RotatingText = ({ words }) => {
   const [index, setIndex] = useState(0);
@@ -10,8 +19,8 @@ const RotatingText = ({ words }) => {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % words.length);
         setIsExiting(false);
-      }, 500); // Wait for exit animation
-    }, 3000); // Change word every 3s
+      }, 500);
+    }, 3000);
     return () => clearInterval(timer);
   }, [words.length]);
 
@@ -24,97 +33,131 @@ const RotatingText = ({ words }) => {
   );
 };
 
-const App = () => {
-  const words = ["AI Solutions", "Computer Vision", "Natural Language Processing", "Agentic AI"];
-  const resumeData = {
-    name: "Gayatri Vikas Ghorpade",
-    summary: "Innovative AI/ML enthusiast with hands-on experience in software development and solution building. Proficient in designing, developing, and deploying machine learning, computer vision, and NLP solutions, along with full-stack development.",
-    experience: [
-      {
-        company: "Beautiful Destinations",
-        role: "AI Engineer",
-        period: "Aug 2025 – Present",
-        responsibilities: [
-          "Developed AI-powered automation tools using Python, Flask, Node.js and GCP to streamline internal workflows and reduce manual operational effort.",
-          "Built Retrieval-Augmented Generation (RAG) applications using OpenAI embeddings, Claude Sonnet, and LlamaIndex for context-aware responses.",
-          "Engineered LLM-powered content generation pipelines integrating Gemini and OpenAI APIs to automate caption creation.",
-          "Implemented semantic search systems using vector embeddings and FAISS to improve knowledge retrieval speed and accuracy.",
-          "Designed scalable backend APIs using Flask and REST architecture to integrate AI capabilities into internal applications.",
-          "Developed data extraction pipelines through web scraping and OpenAI-based entity mapping for structured insights.",
-          "Managed scalable data storage and retrieval using Supabase and Google Cloud Storage for media files and application datasets.",
-          "Improved application performance by debugging systems, optimizing backend processes, and implementing UI features.",
-          "Collaborated with cross-functional teams to deploy AI-driven features and continuously enhance internal automation tools."
-        ],
-        skills: ["Automation", "API Integration", "Google Cloud Run", "Flask", "Data Scraping", "RAG Systems", "LLM Engineering", "Next.js", "Node.js", "GCP"]
-      },
-      {
-        company: "Artiset",
-        role: "Software Engineer Intern",
-        period: "June 2024 – May 2025",
-        responsibilities: [
-          "Led development of a real-time Resume Builder Platform by architecting scalable backend services using Python and Flask, reducing response time by 30%.",
-          "Directed a cross-functional team in implementing core platform features and system architecture, enabling scalable application growth.",
-          "Engineered high-performance backend APIs and microservices using Flask and REST architecture for real-time data processing.",
-          "Conducted R&D to design scalable system architectures and automated workflows, reducing production downtime by 25%.",
-          "Built AI-powered resume intelligence features using NLP techniques and Google Gemini API for intelligent text processing."
-        ],
-        skills: ["Problem Solving", "Flask", "JSON", "Back-End Web Development", "Gen AI", "MongoDB", "REST APIs", "Session Management", "AWS", "NLP"]
-      }
-    ],
-    projects: [
-      {
-        title: "Agentic AI (2025)",
-        tech: "CrewAI, Llama, Python, JIRA",
-        description: "Architected intelligent autonomous agent workflows to automate complex software development tasks."
-      },
-      {
-        title: "Conversational AI (2025)",
-        tech: "Python, Flask, OpenCV, Gemini API, FAISS",
-        description: "Built an AI-driven interview assistant with adaptive questioning and emotion recognition."
-      },
-      {
-        title: "Resume Builder Platform (2024-2025)",
-        tech: "NLP, MongoDB, Gemini API, Docker, Flask",
-        description: "Engineered a comprehensive resume-building website with intelligent text extraction."
-      },
-      {
-        title: "5G Gesture Recognition (2024)",
-        tech: "5G cameras, Twilio API, Roboflow",
-        description: "Formulated real-time Gesture and Facial recognition system leveraging 5G technology."
-      }
-    ],
-    education: {
-      degree: "Bachelor of Technology in AI and Data Science",
-      school: "Dr. D. Y. Patil School of Science and Technology, Pune",
-      period: "2021 – 2025",
-      cgpa: "9.8"
+const resumeData = {
+  name: "Gayatri Vikas Ghorpade",
+  summary: "Innovative AI/ML enthusiast with hands-on experience in software development and solution building. Proficient in designing, developing, and deploying machine learning, computer vision, and NLP solutions, along with full-stack development.",
+  experience: [
+    {
+      company: "Beautiful Destinations",
+      role: "AI Engineer",
+      period: "Aug 2025 – Present",
+      responsibilities: [
+        "Developed AI-powered automation tools using Python, Flask, Node.js and GCP to streamline internal workflows and reduce manual operational effort.",
+        "Built Retrieval-Augmented Generation (RAG) applications using OpenAI embeddings, Claude Sonnet, and LlamaIndex for context-aware responses.",
+        "Engineered LLM-powered content generation pipelines integrating Gemini and OpenAI APIs to automate caption creation.",
+        "Implemented semantic search systems using vector embeddings and FAISS to improve knowledge retrieval speed and accuracy.",
+        "Designed scalable backend APIs using Flask and REST architecture to integrate AI capabilities into internal applications.",
+        "Developed data extraction pipelines through web scraping and OpenAI-based entity mapping for structured insights.",
+        "Managed scalable data storage and retrieval using Supabase and Google Cloud Storage for media files and application datasets.",
+        "Improved application performance by debugging systems, optimizing backend processes, and implementing UI features.",
+        "Collaborated with cross-functional teams to deploy AI-driven features and continuously enhance internal automation tools."
+      ],
+      skills: ["Automation", "API Integration", "Google Cloud Run", "Flask", "Data Scraping", "RAG Systems", "LLM Engineering", "Next.js", "Node.js", "GCP"]
     },
-    skills: {
-      languages: ["Python", "JavaScript"],
-      databases: ["MongoDB", "SQL", "PostgreSQL", "Supabase"],
-      ai_ml: ["NLP", "Computer Vision", "Deep Learning", "LLMs"],
-      devops: ["Docker", "Kubernetes", "Git", "GCP"]
-    },
-    achievements: [
-      {
-        title: "Student Excellence Award (2024)",
-        issuer: "Dr. D.Y. Vidyapeeth, Pune",
-        description: "Recognized with the Student Achievement Award for maintaining a high GPA and active involvement in extracurricular and research activities."
-      },
-      {
-        title: "IBM SkillsBuild State Level Hackathon",
-        issuer: "Feb 2025",
-        description: "Secured Top 10 Position in IBM Skills Build Maharashtra State Level Hackathon Showcase 2025."
-      }
-    ],
-    contact: {
-      phone: "+91 9623520301",
-      email: "gayatrighorpade409@gmail.com",
-      linkedin: "https://www.linkedin.com/in/gayatri-ghorpade-778797274/",
-      github: "https://github.com/gayatrikghorpade"
+    {
+      company: "Artiset",
+      role: "Software Engineer Intern",
+      period: "June 2024 – May 2025",
+      responsibilities: [
+        "Led development of a real-time Resume Builder Platform by architecting scalable backend services using Python and Flask, reducing response time by 30%.",
+        "Directed a cross-functional team in implementing core platform features and system architecture, enabling scalable application growth.",
+        "Engineered high-performance backend APIs and microservices using Flask and REST architecture for real-time data processing.",
+        "Conducted R&D to design scalable system architectures and automated workflows, reducing production downtime by 25%.",
+        "Built AI-powered resume intelligence features using NLP techniques and Google Gemini API for intelligent text processing."
+      ],
+      skills: ["Problem Solving", "Flask", "JSON", "Back-End Web Development", "Gen AI", "MongoDB", "REST APIs", "Session Management", "AWS", "NLP"]
     }
-  };
+  ],
+  projects: [
+    {
+      slug: "agentic-ai",
+      title: "Agentic AI (Ops Chatbot)",
+      tech: "Next.js, LlamaIndex, Supabase, Gemini, OpenAI",
+      description: "AI-powered Operations Chatbot with RAG, multimodal OCR, and autonomous agent workflows for complex doc processing.",
+      details: {
+        subtitle: "Intelligent Operations Automation",
+        overview: "An AI-powered Operations Chatbot built with Next.js, Supabase, and LlamaIndex. This system allows administrators to upload PDF documents and enables users to query that knowledge base using a Retrieval-Augmented Generation (RAG) approach.",
+        technologies: [
+          { name: "Next.js", desc: "App Router & Server Actions for seamless full-stack performance." },
+          { name: "LlamaIndex.ts", desc: "Advanced RAG orchestration and agentic tool-calling logic." },
+          { name: "Supabase", desc: "PostgreSQL with pgvector for high-performance semantic search." },
+          { name: "Gemini AI", desc: "Multimodal OCR and high-dimensional vector embeddings." }
+        ],
+        highlights: [
+          { title: "Hybrid OCR Parsing", desc: "Combines standard text extraction with Gemini Flash for image-based PDFs." },
+          { title: "Agentic Workflows", desc: "OpenAIAgent with automated fallback to native search for missing local data." },
+          { title: "Optimized Retrieval", desc: "Truncated 1536-dim embeddings for sub-second database response times." }
+        ]
+      }
+    },
+    {
+      slug: "conversational-ai",
+      title: "VIKA: Conversational AI Interview System",
+      tech: "Python, Gemini API, YOLOv8, TensorFlow, FAISS, Flask",
+      description: "AI-driven technical interview platform that simulates real-world interviewers with emotion analysis and adaptive difficulty.",
+      details: {
+        subtitle: "Emotion-Aware Technical Interviewer",
+        overview: "VIKA is a sophisticated, AI-driven technical interview platform designed to simulate a real-world human interviewer. It goes beyond simple Q&A by analyzing the candidate's code quality, emotional state, and adapting the interview difficulty in real-time.",
+        technologies: [
+          { name: "Google Gemini", desc: "Natural language reasoning, empathetic interaction, and multimodality." },
+          { name: "Computer Vision", desc: "YOLOv8 and Custom CNNs for real-time face and emotion detection." },
+          { name: "FAISS (RAG)", desc: "Retrieval-Augmented Generation for context-aware technical questions." },
+          { name: "Static Analysis", desc: "AST Fingerprinting and Radon for structural code quality metrics." }
+        ],
+        highlights: [
+          { title: "Real-time Emotion Analysis", desc: "Calculates a Stress Score based on weighted emotional triggers using webcam feed." },
+          { title: "Adaptive Difficulty", desc: "Dynamically tunes coding challenge complexity based on candidate performance and panic levels." },
+          { title: "Empathetic Feedback", desc: "LLM-driven responses that adjust tone based on the candidate's emotional state." }
+        ]
+      }
+    },
+    {
+      slug: "resume-builder",
+      title: "Resume Builder Platform",
+      tech: "NLP, MongoDB, Gemini API, Docker, Flask",
+      description: "Engineered a comprehensive resume-building website with intelligent text extraction."
+    },
+    {
+      slug: "gesture-recognition",
+      title: "5G Gesture Recognition",
+      tech: "5G cameras, Twilio API, Roboflow",
+      description: "Formulated real-time Gesture and Facial recognition system leveraging 5G technology."
+    }
+  ],
+  education: {
+    degree: "Bachelor of Technology in AI and Data Science",
+    school: "Dr. D. Y. Patil School of Science and Technology, Pune",
+    period: "2021 – 2025",
+    cgpa: "9.8"
+  },
+  skills: {
+    languages: ["Python", "JavaScript"],
+    databases: ["MongoDB", "SQL", "PostgreSQL", "Supabase"],
+    ai_ml: ["NLP", "Computer Vision", "Deep Learning", "LLMs"],
+    devops: ["Docker", "Kubernetes", "Git", "GCP"]
+  },
+  achievements: [
+    {
+      title: "Student Excellence Award (2024)",
+      issuer: "Dr. D.Y. Vidyapeeth, Pune",
+      description: "Recognized with the Student Achievement Award for maintaining a high GPA and active involvement in extracurricular and research activities."
+    },
+    {
+      title: "IBM SkillsBuild State Level Hackathon",
+      issuer: "Feb 2025",
+      description: "Secured Top 10 Position in IBM Skills Build Maharashtra State Level Hackathon Showcase 2025."
+    }
+  ],
+  contact: {
+    phone: "+91 9623520301",
+    email: "gayatrighorpade409@gmail.com",
+    linkedin: "https://www.linkedin.com/in/gayatri-ghorpade-778797274/",
+    github: "https://github.com/gayatrikghorpade"
+  }
+};
 
+const Home = () => {
+  const words = ["AI Solutions", "Computer Vision", "Natural Language Processing", "Agentic AI"];
   return (
     <div className="portfolio">
       <aside className="sidebar">
@@ -161,7 +204,7 @@ const App = () => {
                 <h3>AI & Machine Learning</h3>
                 <div className="skill-tags" style={{ marginTop: '1rem' }}>
                   {resumeData.skills.ai_ml.map((s, i) => (
-                    <div key={i} className="skill-tag" style={{ fontSize: '1.1rem', padding: '0.6rem 1.25rem', background: 'rgba(59, 130, 246, 0.1)', borderColor: 'rgba(59, 130, 246, 0.2)', color: '#60a5fa' }}>
+                    <div key={i} className="skill-tag-featured">
                        {s}
                     </div>
                   ))}
@@ -176,7 +219,7 @@ const App = () => {
               <div className="skill-category">
                 <h3>Languages</h3>
                 <div className="skill-tags">
-                  {resumeData.skills.languages.map((s, i) => <span key={i} className="skill-tag">{s}</span>)}
+                  {resumeData.skills.languages.map((s, i) => <span key={i} className="skill-tag-simple">{s}</span>)}
                 </div>
               </div>
             </div>
@@ -185,7 +228,7 @@ const App = () => {
               <div className="skill-category">
                 <h3>Databases</h3>
                 <div className="skill-tags">
-                  {resumeData.skills.databases.slice(0, 2).map((s, i) => <span key={i} className="skill-tag">{s}</span>)}
+                  {resumeData.skills.databases.slice(0, 2).map((s, i) => <span key={i} className="skill-tag-simple">{s}</span>)}
                 </div>
               </div>
             </div>
@@ -194,8 +237,8 @@ const App = () => {
               <div className="skill-category">
                 <h3>Cloud</h3>
                 <div className="skill-tags">
-                  <span className="skill-tag">GCP</span>
-                  <span className="skill-tag">AWS</span>
+                  <span className="skill-tag-simple">GCP</span>
+                  <span className="skill-tag-simple">AWS</span>
                 </div>
               </div>
             </div>
@@ -204,7 +247,7 @@ const App = () => {
               <div className="skill-category">
                 <h3>DevOps & Tools</h3>
                 <div className="skill-tags">
-                  {resumeData.skills.devops.map((s, i) => <span key={i} className="skill-tag">{s}</span>)}
+                  {resumeData.skills.devops.map((s, i) => <span key={i} className="skill-tag-simple">{s}</span>)}
                 </div>
               </div>
             </div>
@@ -215,11 +258,13 @@ const App = () => {
           <h2 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '3rem' }}>Selected Projects</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '3rem' }}>
             {resumeData.projects.map((project, i) => (
-              <div key={i} className="card">
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.75rem' }}>{project.title}</h3>
-                <p className="highlight-pill" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>{project.tech}</p>
-                <p style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>{project.description}</p>
-              </div>
+              <Link to={`/projects/${project.slug}`} key={i} className="card-link">
+                <div className="card">
+                  <h3 style={{ fontSize: '1.5rem', marginBottom: '0.75rem' }}>{project.title}</h3>
+                  <p className="highlight-pill" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>{project.tech}</p>
+                  <p style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>{project.description}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -306,7 +351,97 @@ const App = () => {
         </section>
       </main>
     </div>
-  )
-}
+  );
+};
+
+const ProjectDetail = () => {
+  const { slug } = useParams();
+  const project = resumeData.projects.find(p => p.slug === slug);
+
+  if (!project) return <div className="project-page">Project not found</div>;
+
+  return (
+    <div className="project-page">
+      <nav className="project-nav">
+        <Link to="/" className="back-link">
+          <span className="arrow">←</span> Back to projects
+        </Link>
+      </nav>
+
+      <div className="project-container">
+        <header className="project-header fade-in">
+          <div className="header-meta">
+            <span className="year">2025</span>
+            <span className="status-pill">LIVE - PRODUCTION READY</span>
+          </div>
+          <h1 className="project-title">{project.title}</h1>
+          <p className="project-subtitle">{project.details?.subtitle || project.tech}</p>
+          <div className="project-overview-container">
+            <p className="project-overview-text">
+              {project.details?.overview || project.description}
+            </p>
+          </div>
+
+          <div className="tech-pills">
+            {project.tech.split(',').map((t, idx) => (
+              <span key={idx} className="tech-pill">{t.trim()}</span>
+            ))}
+          </div>
+        </header>
+
+        {project.details && (
+          <>
+            <section className="project-section fade-in">
+              <h2 className="section-label">Technology</h2>
+              <h3 className="section-heading">Built with modern tools</h3>
+              <div className="tech-grid">
+                {project.details.technologies.map((tech, idx) => (
+                  <div key={idx} className="tech-card">
+                    <h4>{tech.name}</h4>
+                    <p>{tech.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="project-section fade-in">
+              <h2 className="section-label">Highlights</h2>
+              <h3 className="section-heading">What makes it special</h3>
+              <div className="highlights-grid">
+                {project.details.highlights.map((h, idx) => (
+                  <div key={idx} className="highlight-item">
+                    <h4>{h.title}</h4>
+                    <p>{h.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        <footer className="project-footer">
+          <div className="contact-card">
+            <h3>HAVE A SIMILAR PROJECT IN MIND?</h3>
+            <div style={{ marginTop: '2rem' }}>
+              <a href={`mailto:${resumeData.contact.email}`} className="btn btn-primary">Let's Talk</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App
