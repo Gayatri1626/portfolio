@@ -134,9 +134,24 @@ const resumeData = {
     },
     {
       slug: "gesture-recognition",
-      title: "5G Gesture Recognition",
-      tech: "5G cameras, Twilio API, Roboflow",
-      description: "Formulated real-time Gesture and Facial recognition system leveraging 5G technology."
+      title: "SignDetectionCV: Gesture & Face Auth",
+      tech: "Python, OpenCV, TensorFlow, Twilio, pandas",
+      description: "Computer Vision system integrating hand gesture recognition with face authentication and automated notifications.",
+      details: {
+        subtitle: "AI-Powered Hand Tracking & Automation",
+        overview: "A sophisticated Sign Detection system that combines hand tracking with secure facial authentication. Recognizes specific gestures to trigger automated actions like SMS alerts and voice calls.",
+        technologies: [
+          { name: "OpenCV & cvzone", desc: "Precise hand tracking and face identification algorithms." },
+          { name: "TensorFlow/Keras", desc: "Custom-trained classification models for gesture recognition." },
+          { name: "Twilio API", desc: "Automated triggers for SMS and Voice call notifications." },
+          { name: "Logging & TTS", desc: "Excel-based auditing and real-time Text-to-Speech feedback." }
+        ],
+        highlights: [
+          { title: "Secure Authentication", desc: "Face-recognition gated entry ensures only authorized users can trigger actions." },
+          { title: "Automated Assistance", desc: "Triggers calls to technicians or cleaners automatically via hand signs." },
+          { title: "Audit Trail", desc: "Comprehensive logging system captures every interaction for security and verification." }
+        ]
+      }
     }
   ],
   education: {

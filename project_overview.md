@@ -1,72 +1,54 @@
-# Resume Model & AI Career Coach
+# SignDetectionCVProject Overview
 
-A comprehensive platform for AI-powered resume generation, analysis, and career guidance. This project leverages advanced LLMs and NLP techniques to help users build professional resumes and navigate their career paths.
+This project is a Computer Vision-based Sign Detection system that integrates hand gesture recognition with face authentication and automated notifications.
 
-## 🚀 Tech Stack
+## 🚀 Features
 
-### **Frontend**
-- **HTML5/CSS3**: Core structure and design. Includes multiple responsive templates.
-- **JavaScript**: Client-side logic for dynamic interactions.
-- **Vanilla CSS**: Premium styling with dark mode support.
+- **Face Authentication**: Ensures only authorized users can interact with the system using gestures.
+- **Real-time Hand Tracking**: Detects and tracks hand movements with high precision.
+- **Gesture Classification**: Recognizes specific hand signs to trigger pre-defined actions.
+- **Automated Actions**:
+  - **Hello**: Captures a screenshot and provides a vocal welcome.
+  - **Help-Cleaner**: Sends an SMS alert for cleaning assistance.
+  - **Help-Technician**: Initiates a phone call for technical support.
+  - **Yes/Cancel**: Provides vocal confirmation and logs interactions.
+- **Vocal Feedback**: Uses Text-to-Speech (TTS) to interact with the user.
+- **Interaction Logging**: Automatically logs all user actions into an Excel-based system for auditing.
 
-### **Backend**
-- **Framework**: Python (Flask)
-- **API**: Flask-CORS for handling cross-origin requests.
-- **Environment**: `python-dotenv` for secure API key management.
-- **Authentication**: Flask-Bcrypt and custom MongoDB session management.
+## 🛠️ Tech Stack
 
-### **Database**
-- **Primary DB**: MongoDB (Atlas)
-- **Collections**:
-  - `users`: User profiles and authentication data.
-  - `finalized_resumes`: Completed resume records.
-  - `draft_resumes`: In-progress resume data.
-  - `session`: Active user sessions.
-
-### **AI & NLP (The Engine)**
-- **LLM Engine**: Google **Gemini 2.0 Flash** via `google-generativeai`.
-- **Entity Extraction**: `pdfplumber` and `xml.etree.ElementTree` for raw text extraction from PDF/DOCX.
-- **Custom NER**: **spaCy** for Named Entity Recognition training and data preparation.
-- **PDF Processing**: `pdf2image`, `docx2pdf`, and headless **LibreOffice** for high-fidelity document conversion.
-
----
-
-## 🛠️ Core Features
-
-### 1. **AI-Powered Resume Builder**
-- **Intelligent Generation**: Generate professional titles, objectives, responsibilities, and skills based on specific job roles using Gemini 2.0 Flash.
-- **Multiple Templates**: 11+ professional resume templates (`template1.py` to `template11.py`) and cover letter templates.
-- **Real-time Preview**: View changes as they are made.
-
-### 2. **Resume Analyzer**
-- **Deep Extraction**: Extracts structured data (Name, Contact, Experience, Education) from uploaded PDFs and DOCX files.
-- **Career Gap Analysis**: Identifies skill gaps and provides improvement suggestions.
-- **Keyword Optimization**: Suggests enhancements for better ATS (Applicant Tracking System) performance.
-
-### 3. **AI Career Coach**
-- **Tailored Advice**: Provides a step-by-step learning path, recommended books, and certifications for specific job titles.
-- **Interview Prep**: Integrated interview coaching features to prepare users for specific roles.
-- **Resource Linking**: Provides direct links to courses and books for career growth.
-
----
+- **Languages**: Python
+- **Computer Vision**: OpenCV, `cvzone` (HandTrackingModule, ClassificationModule), `face_recognition`
+- **Machine Learning**: TensorFlow/Keras (Model classification)
+- **APIs & Services**: Twilio (SMS and Voice Calls)
+- **Utilities**: `pyttsx3` (TTS), `pyautogui` (Screenshots), `pandas` (Excel logging), `numpy`
 
 ## 🔄 Project Flow
 
-1.  **Onboarding**: User registers and authenticates through the landing page.
-2.  **Creation Path**:
-    - **Drafting**: User selects a template and fills in details manually or via AI suggestions.
-    - **Generation**: Flask server calls Gemini API to polish content.
-3.  **Analysis Path**:
-    - User uploads an existing resume.
-    - System extracts text -> Gemini analyzes content -> System returns an HTML-formatted dashboard with advice.
-4.  **Finalization**: Resume is generated as a `docx` file, which can then be converted to a professional PDF using the internal LibreOffice-based engine.
-5.  **Export**: User downloads the finalized, high-quality professional document.
+1. **Initialization**:
+   - Load pre-trained Keras model and labels.
+   - Load face encodings for authorized personnel.
+2. **Phase 1: Authentication**:
+   - System monitors the webcam for a known face.
+   - Upon successful identification, it grants access and provides a vocal welcome.
+3. **Phase 2: Gesture Recognition**:
+   - Tracks the user's hand.
+   - Pre-processes the hand image (crop, resize, normalize) for the classifier.
+   - Predicts the gesture based on the pre-trained model.
+4. **Phase 3: Action Execution**:
+   - If a gesture is consistently detected (above a threshold), the corresponding action (SMS, Call, Screenshot, or Speech) is triggered.
+   - The interaction is logged with a timestamp and user ID.
+
+## 📁 Directory Structure
+
+- `Data/`: Contains training data groups (e.g., "Yes", "Hello").
+- `Model/`: Stores the `keras_model.h5` and `labels.txt`.
+- `People/`: Stores images of authorized users for face recognition.
+- `user_logs/`: Contains the interaction history in `user_interactions.xlsx`.
+- `collectdata.py`: Script for capturing and saving new gesture data.
+- `test.py`: Main application script with face authentication and gestures.
+- `without_face.py`: Alternative application script skipping face authentication.
+- `user_log.py`: Utility module for logging interactions.
 
 ---
-
-## 🧠 The Engine: How It Works
-
-The system uses a **Hybrid AI Approach**:
-- **Generative AI (Gemini 2.0 Flash)**: Used for high-level reasoning, creative writing, and complex data mapping where flexibility is required.
-- **Deterministic Processing**: Traditional XML and PDF parsing ensure that structural elements (like headers, footers, and tables) are captured accurately.
-- **Custom NLP (spaCy)**: The project includes a dedicated pipeline for generating training data to potentially transition from LLM-based extraction to lighter, custom-trained NER models for faster and more cost-effective entity extraction.
+*Created by Antigravity AI Assistant*
