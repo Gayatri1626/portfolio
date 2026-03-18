@@ -134,7 +134,7 @@ const resumeData = {
     },
     {
       slug: "gesture-recognition",
-      title: "SignDetectionCV: Gesture & Face Auth",
+      title: "SignDetection: Gesture and Face Authentication",
       tech: "Python, OpenCV, TensorFlow, Twilio, pandas",
       description: "Computer Vision system integrating hand gesture recognition with face authentication and automated notifications.",
       details: {
